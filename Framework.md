@@ -143,5 +143,6 @@ The rapid dissemination of fake news on digital platforms poses serious societal
 ---
 
 ## Author
-*Your Name*  
+*Sujal Thakkar*  
+*Vatsal Savani*  
 
