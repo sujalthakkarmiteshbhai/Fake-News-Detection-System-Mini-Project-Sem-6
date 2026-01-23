@@ -1,4 +1,4 @@
-# Fake News Detection System Using Deep Learning and Web Technologies
+# Project Framework
 
 ## 1. Project Title
 **Fake News Detection System Using Deep Learning and Web Technologies**
