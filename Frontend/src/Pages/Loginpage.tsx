@@ -1,6 +1,7 @@
 import React, { useState, FormEvent, ChangeEvent } from 'react';
 import './css/LoginPage.css';
 import { useNavigate } from 'react-router-dom';
+import { loginApi, signupApi } from "../api"; 
 
 // Type Definitions
 type TabType = 'login' | 'signup';
@@ -60,60 +61,69 @@ const LoginPage: React.FC = () => {
   };
 
   // Handle login form submission
-  const handleLoginSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
 
-    const errors: ValidationErrors = {};
-    const emailError = Validator.validateEmail(loginEmail);
-    const passwordError = Validator.validatePassword(loginPassword);
 
-    if (emailError) errors.email = emailError;
-    if (passwordError) errors.password = passwordError;
+const handleLoginSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    setLoginErrors(errors);
+  const errors: ValidationErrors = {};
+  const emailError = Validator.validateEmail(loginEmail);
+  const passwordError = Validator.validatePassword(loginPassword);
 
-    if (Object.keys(errors).length === 0) {
-      // Success - send to your API
-      console.log('Login successful:', { email: loginEmail, password: loginPassword });
-  
-      
-      // Reset form
-      setLoginEmail('');
-      setLoginPassword('');
-      // Navigate to analysis page after successful login
-      navigate('/Analysis');
+  if (emailError) errors.email = emailError;
+  if (passwordError) errors.password = passwordError;
+
+  setLoginErrors(errors);
+
+  if (Object.keys(errors).length === 0) {
+    try {
+      const data = await loginApi(loginEmail, loginPassword);
+
+      // ✅ Store user data (session cookie is set automatically by the server)
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // reset form
+      setLoginEmail("");
+      setLoginPassword("");
+
+      // go to analysis page
+      navigate("/Analysis");
+    } catch (err: any) {
+      setLoginErrors({ email: err.message });
     }
-  };
-
+  }
+};
   // Handle signup form submission
-  const handleSignupSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
+ const handleSignupSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    const errors: ValidationErrors = {};
-    const nameError = Validator.validateName(signupName);
-    const emailError = Validator.validateEmail(signupEmail);
-    const passwordError = Validator.validatePassword(signupPassword);
+  const errors: ValidationErrors = {};
+  const nameError = Validator.validateName(signupName);
+  const emailError = Validator.validateEmail(signupEmail);
+  const passwordError = Validator.validatePassword(signupPassword);
 
-    if (nameError) errors.name = nameError;
-    if (emailError) errors.email = emailError;
-    if (passwordError) errors.password = passwordError;
+  if (nameError) errors.name = nameError;
+  if (emailError) errors.email = emailError;
+  if (passwordError) errors.password = passwordError;
 
-    setSignupErrors(errors);
+  setSignupErrors(errors);
 
-    if (Object.keys(errors).length === 0) {
-      // Success - send to your API
-      console.log('Signup successful:', { name: signupName, email: signupEmail, password: signupPassword });
+  if (Object.keys(errors).length === 0) {
+    try {
+      await signupApi(signupName, signupEmail, signupPassword);
 
-      // Reset form
-      setSignupName('');
-      setSignupEmail('');
-      setSignupPassword('');
-      // Switch back to login tab after successful signup
-      switchTab('login');
-      navigate('/Analysis');
-      
+      // reset form
+      setSignupName("");
+      setSignupEmail("");
+      setSignupPassword("");
+
+      // go to login
+      switchTab("login");
+    } catch (err: any) {
+      setSignupErrors({ email: err.message });
     }
-  };
+  }
+};
 
   // Clear errors on input change
   const handleLoginEmailChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -230,7 +240,7 @@ const LoginPage: React.FC = () => {
                 id="signupName"
                 value={signupName}
                 onChange={handleSignupNameChange}
-                placeholder="John Doe"
+                placeholder="Ramji Bhai"
                 className={signupErrors.name ? 'error' : ''}
                 required
               />
@@ -280,5 +290,10 @@ const LoginPage: React.FC = () => {
     </div>
   );
 };
+
+
+
+
+
 
 export default LoginPage;

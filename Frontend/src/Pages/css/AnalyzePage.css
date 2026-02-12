@@ -232,3 +232,137 @@ body {
   }
 }
 
+/* Result Card Styles */
+.result-area {
+  margin-top: 1.5rem;
+}
+
+.result-card {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  background: linear-gradient(180deg, #fff5f6 0%, #fff 100%);
+  border: 2px solid #f43f5e;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 8px 24px rgba(244, 63, 94, 0.06);
+}
+
+.result-left {
+  flex: 1 1 auto;
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.result-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: #fff0f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f43f5e;
+  font-size: 20px;
+  border: 1px solid rgba(244, 63, 94, 0.12);
+}
+
+.result-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.result-badge {
+  margin-left: 0.5rem;
+  background: #fee2e2;
+  color: #7f1d1d;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+.result-confidence {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #111827;
+  margin-left: auto;
+  text-align: right;
+}
+
+.result-confidence small {
+  display: block;
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.result-details {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 0.75rem;
+  border: 1px solid rgba(0,0,0,0.03);
+  min-height: 120px;
+  color: #374151;
+}
+
+.result-details ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+
+.result-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-secondary {
+  flex: 1;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.06);
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary {
+  flex: 1;
+  background: #111827;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.result.real .result-badge {
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.result.fake .result-badge {
+  background: #fff1f2;
+  color: #7f1d1d;
+}
+
+@media (max-width: 768px) {
+  .result-card {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .result-confidence {
+    margin-left: 0;
+    text-align: left;
+  }
+}
+
