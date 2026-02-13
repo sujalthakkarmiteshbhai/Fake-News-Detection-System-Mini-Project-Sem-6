@@ -3,7 +3,6 @@ import pickle
 
 app = Flask(__name__)
 
-# load model and vectorizer
 with open("log_reg_model.pkl", "rb") as f:
     model = pickle.load(f)
 
@@ -14,16 +13,14 @@ with open("tf_vectorizer.pkl", "rb") as f:
 def predict():
     data = request.json
 
-    # get news text
     news_text = data.get("news", "")
 
     if not news_text:
-        return jsonify({"error": "No news text provided"}), 400
+        return jsonify({"error": "No news text provided"})
 
-    # text → vector
     text_vector = vectorizer.transform([news_text])
 
-    # prediction
+    
     pred = model.predict(text_vector)[0]
     prob = model.predict_proba(text_vector)[0]
 
